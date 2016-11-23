@@ -1,4 +1,3 @@
-//Coded by Ashkan.rmk
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -126,6 +125,7 @@ void Read_DFA_asFile()
 	if (!inputFile)	//check for file opening
 	{
 		cerr << "some thing wrong during opening file!" << endl;
+		_getche();
 		exit(1);
 	}
 
@@ -170,9 +170,11 @@ void Read_DFA_asFile()
 void Check_String()
 {
 	string input;
-	bool goal = true;
-	bool check = false;
-	bool CON = true;
+	bool goal = false;	//checking foreign alphabet
+	bool check = true;	//checking accept state
+	bool CON = true;	
+	int START;		//save Start State Number
+	START = start_state_num;
 	while (CON)
 	{
 		system("cls");
@@ -197,39 +199,39 @@ void Check_String()
 		}
 
 
-		start_state_num = 1;
-		goal = true;
 		for (int i = 0; input[i]; i++)
 		{
-			goal = true;
-			for (int j = 0; j < total_state_num && goal; j++)
+			for (int j = 0; j < total_state_num ; j++)	
 			{
-				goal = true;
-				if (state[j].num_state == start_state_num)
+				if (state[j].num_state == START)
 				{
 					for (int k = 0; k < state[j].transit_num; k++)
 					{
 						if (input[i] == possible_transit[k])
 						{
-							start_state_num = state[j].transition[k];
-							goal = false;
+							START = state[j].transition[k];
+							goal = true;
 							break;
 						}
+						else
+						{
+							goal = false;	//if string is NOT in alphabet range
+						}
+						
 					}
 				}
 			}
 		}
 
-		check = true;
 
 		for (int i = 0; i < acc_state_num; i++)
 		{
-			if (final_accept_state[i] == start_state_num)
+			if (final_accept_state[i] == START && goal)
 			{
 				color(3);
 				gotoxy(40, 9);
 				cout << "\n\n\t\tAccept!\n\n" << endl;
-				check = false;
+				check = false;	//if state accepted
 				system("pause>0");
 			}
 		}
@@ -402,6 +404,5 @@ void menu()
 int main()
 {
 	menu();
-
 	return 0;
 }
