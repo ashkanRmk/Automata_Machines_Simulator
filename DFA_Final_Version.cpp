@@ -170,13 +170,17 @@ void Read_DFA_asFile()
 void Check_String()
 {
 	string input;
-	bool goal = false;	//checking foreign alphabet
-	bool check = true;	//checking accept state
+	bool goal;	//checking foreign alphabet
+	bool check;	//checking accept state
 	bool CON = true;	
 	int START;		//save Start State Number
-	START = start_state_num;
+	int lng;		//Check number of possible alphabets
 	while (CON)
 	{
+		goal = false;
+		check = true;
+		lng = 0;
+		START = start_state_num;
 		system("cls");
 		color(7);
 		cout << "\n\n\n\n\t\tEnter Your String:" << endl;
@@ -187,6 +191,8 @@ void Check_String()
 		gotoxy(35, 5);
 		color(6);
 		cout << input;
+
+		/////////Show Heads
 		int count = 35;
 		for (int i = 0; i < input.size(); i++)
 		{
@@ -197,8 +203,9 @@ void Check_String()
 			cout << "|";
 			count++;
 		}
-
-
+		////////////////////////
+		gotoxy(0, 1);
+		cout << "* States Status *\n\n";
 		for (int i = 0; input[i]; i++)
 		{
 			for (int j = 0; j < total_state_num ; j++)	
@@ -209,20 +216,32 @@ void Check_String()
 					{
 						if (input[i] == possible_transit[k])
 						{
+							cout << "q" << START << "  --" << input[i] << "->  " << "q" << state[j].transition[k] << endl;
 							START = state[j].transition[k];
-							goal = true;
 							break;
 						}
-						else
-						{
-							goal = false;	//if string is NOT in alphabet range
-						}
-						
 					}
 				}
 			}
 		}
 
+		////////Check For Foreign Alphabets
+		for (int i = 0; input[i]; i++)
+		{
+			for (int j = 0; possible_transit[j]; j++)
+			{
+				if (input[i] == possible_transit[j])
+				{
+					lng++;
+				}
+			}
+
+		}
+		if (lng == input.size())
+		{
+			goal = true;
+		}
+		/////////////////////////////////////////
 
 		for (int i = 0; i < acc_state_num; i++)
 		{
@@ -323,6 +342,60 @@ void Loading()
 	system("cls");
 }
 
+void exit_menu()
+{
+	system("cls");
+	char ch;
+	int select = 2;
+
+	while (1)
+	{
+		system("cls");
+		color(20);
+		gotoxy(28, 6);
+		cout << "Are you Sure want to EXIT?";
+
+		if (select == 1)
+			color(11);
+		else
+			color(15);
+
+		gotoxy(28, 10);
+		cout << "YES";
+
+		if (select == 2)
+			color(11);
+		else
+			color(15);
+
+		gotoxy(28, 12);
+		cout << "NO";
+
+		ch = _getch();
+		switch (ch)
+		{
+		case 72:	//Up
+			select--;
+			if (select == 0)
+				select = 2;
+			break;
+		case 80:	//Down
+			select++;
+			if (select == 3)
+				select = 1;
+			break;
+		case 13:	//Enter
+			if (select == 1)
+				exit(1);
+			if (select == 2)
+			{
+				return;
+			}
+		}
+	}
+
+}
+
 void menu()
 {
 	system("cls");
@@ -396,7 +469,8 @@ void menu()
 			if (select == 3)
 				about();
 			if (select == 4)
-				exit(0);
+				//exit(0);
+				exit_menu();
 		}
 	}
 }
