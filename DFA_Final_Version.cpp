@@ -1,3 +1,4 @@
+//Coded by: Ashkan.rmk
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -192,38 +193,9 @@ void Check_String()
 		color(6);
 		cout << input;
 
-		/////////Show Heads
+		/////////Show Heads Var
 		int count = 35;
-		for (int i = 0; i < input.size(); i++)
-		{
-			Sleep(1000);
-			gotoxy(count, 6);
-			cout << "^";
-			gotoxy(count, 7);
-			cout << "|";
-			count++;
-		}
-		////////////////////////
-		gotoxy(0, 1);
-		cout << "* States Status *\n\n";
-		for (int i = 0; input[i]; i++)
-		{
-			for (int j = 0; j < total_state_num ; j++)	
-			{
-				if (state[j].num_state == START)
-				{
-					for (int k = 0; k < state[j].transit_num; k++)
-					{
-						if (input[i] == possible_transit[k])
-						{
-							cout << "q" << START << "  --" << input[i] << "->  " << "q" << state[j].transition[k] << endl;
-							START = state[j].transition[k];
-							break;
-						}
-					}
-				}
-			}
-		}
+		int c = 3;
 
 		////////Check For Foreign Alphabets
 		for (int i = 0; input[i]; i++)
@@ -241,7 +213,42 @@ void Check_String()
 		{
 			goal = true;
 		}
+		else
+		{
+			gotoxy(5, 5);
+			cout << "Input Foreign Alphabet in your string";
+		}
 		/////////////////////////////////////////
+
+		gotoxy(0, 1);
+		cout << "* States Status *\n\n";
+		for (int i = 0; input[i] && goal; i++)
+		{
+			Sleep(1000);
+			gotoxy(count, 6);
+			cout << "^";
+			gotoxy(count, 7);
+			cout << "|";
+			count++;
+			gotoxy(0, c++);
+			for (int j = 0; j < total_state_num ; j++)	
+			{
+				if (state[j].num_state == START)
+				{
+					for (int k = 0; k < state[j].transit_num; k++)
+					{
+						if (input[i] == possible_transit[k])
+						{
+							cout << "q" << START << "  --" << input[i] << "->  " << "q" << state[j].transition[k] << endl;
+							START = state[j].transition[k];
+							break;
+						}
+					}
+				}
+			}
+		}
+
+
 
 		for (int i = 0; i < acc_state_num; i++)
 		{
@@ -353,7 +360,7 @@ void exit_menu()
 		system("cls");
 		color(20);
 		gotoxy(28, 6);
-		cout << "Are you Sure want to EXIT?";
+		cout << "Are you Sure to EXIT?";
 
 		if (select == 1)
 			color(11);
