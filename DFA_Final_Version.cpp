@@ -173,7 +173,8 @@ void Check_String()
 	string input;
 	bool goal;	//checking foreign alphabet
 	bool check;	//checking accept state
-	bool CON = true;	
+	bool flag;	//flag for go to next state
+	bool CON = true;
 	int START;		//save Start State Number
 	int lng;		//Check number of possible alphabets
 	while (CON)
@@ -222,17 +223,20 @@ void Check_String()
 
 		gotoxy(0, 1);
 		cout << "* States Status *\n\n";
+		flag = true;
 		for (int i = 0; input[i] && goal; i++)
 		{
 			Sleep(1000);
 			gotoxy(count, 6);
 			cout << "^";
-			gotoxy(count, 7);
-			cout << "|";
+			gotoxy(count - 1, 6);
+			cout << " ";
 			count++;
 			gotoxy(0, c++);
-			for (int j = 0; j < total_state_num ; j++)	
+			flag = true;
+			for (int j = 0; j < total_state_num && flag; j++)
 			{
+				flag = true;
 				if (state[j].num_state == START)
 				{
 					for (int k = 0; k < state[j].transit_num; k++)
@@ -241,6 +245,7 @@ void Check_String()
 						{
 							cout << "q" << START << "  --" << input[i] << "->  " << "q" << state[j].transition[k] << endl;
 							START = state[j].transition[k];
+							flag = false;	//Jump to next char in String
 							break;
 						}
 					}
@@ -256,7 +261,7 @@ void Check_String()
 			{
 				color(3);
 				gotoxy(40, 9);
-				cout << "\n\n\t\tAccept!\n\n" << endl;
+				cout << "Accept!\n\n" << endl;
 				check = false;	//if state accepted
 				system("pause>0");
 			}
@@ -266,12 +271,18 @@ void Check_String()
 		{
 			color(4);
 			gotoxy(40, 9);
-			cout << "\n\n\t\tReject!\n\n" << endl;
+			cout << "Reject!\n\n" << endl;
 			system("pause>0");
 		}
 
-		cout << "\n\n\n\t\t\tAGAIN?\n\t\t1) YES\n\t\t2) NO\n";
-		cout << "\n\t\t-> ";
+		gotoxy(30, 14);
+		cout << "AGAIN?";
+		gotoxy(25, 16);
+		cout << "1) YES";
+		gotoxy(25, 17);
+		cout << "2) NO\n";
+		gotoxy(25, 19);
+		cout << "-> ";
 		int ch;
 		cin >> ch;
 		if (ch == 1)
@@ -287,11 +298,11 @@ void about()
 {
 	system("cls");
 	gotoxy(27, 10);
-	cout << "DFA Simulator v 1.0";
+	cout << "DFA Simulator v 1.2";
 	gotoxy(27, 12);
 	cout << "Coded By Ashkan.rmk";
 	gotoxy(27, 14);
-	cout << ":D";
+	cout << ":D  ";
 	_getch();
 	system("cls");
 }
