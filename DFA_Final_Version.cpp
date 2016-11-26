@@ -40,6 +40,7 @@ char *possible_transit;
 int acc_state_num;
 int *final_accept_state;
 int start_state_num;
+void menu();
 
 void Init_DFA_Manual()
 {
@@ -298,11 +299,20 @@ void about()
 {
 	system("cls");
 	gotoxy(27, 10);
-	cout << "DFA Simulator v 1.2";
+	cout << "DFA Simulator v 1.2.1";
 	gotoxy(27, 12);
 	cout << "Coded By Ashkan.rmk";
 	gotoxy(27, 14);
 	cout << ":D  ";
+	_getch();
+	system("cls");
+}
+
+void coming()
+{
+	system("cls");
+	gotoxy(27, 10);
+	cout << "coming soon!  :D";
 	_getch();
 	system("cls");
 }
@@ -414,7 +424,7 @@ void exit_menu()
 
 }
 
-void menu()
+void DFA_menu()
 {
 	system("cls");
 	char ch;
@@ -449,16 +459,7 @@ void menu()
 			color(15);
 
 		gotoxy(28, 14);
-		cout << "About";
-
-		if (select == 4)
-			color(11);
-		else
-			color(15);
-
-		gotoxy(28, 16);
-		cout << "Exit";
-
+		cout << "Back";
 
 		ch = _getch();
 		switch (ch)
@@ -466,11 +467,11 @@ void menu()
 		case 72:	//Up
 			select--;
 			if (select == 0)
-				select = 4;
+				select = 3;
 			break;
 		case 80:	//Down
 			select++;
-			if (select == 5)
+			if (select == 4)
 				select = 1;
 			break;
 		case 13:	//Enter
@@ -485,8 +486,92 @@ void menu()
 				Init_DFA_Manual();
 			}
 			if (select == 3)
-				about();
+				menu();
+		}
+	}
+}
+
+void menu()
+{
+	system("cls");
+	char ch;
+	int select = 1;
+
+	while (1)
+	{
+		system("cls");
+		color(10);
+		gotoxy(33, 6);
+		cout << "Automatas  Machine Simulator";
+
+		if (select == 1)
+			color(11);
+		else
+			color(15);
+
+		gotoxy(28, 10);
+		cout << "Deterministic finite automaton (DFA)";
+
+		if (select == 2)
+			color(11);
+		else
+			color(15);
+
+		gotoxy(28, 12);
+		cout << "Deterministic pushdown automaton (DPDA)";
+
+		if (select == 3)
+			color(11);
+		else
+			color(15);
+
+		gotoxy(28, 14);
+		cout << "Turing machine";
+
+		if (select == 4)
+			color(11);
+		else
+			color(15);
+
+		gotoxy(28, 16);
+		cout << "About";
+
+		if (select == 5)
+			color(11);
+		else
+			color(15);
+
+		gotoxy(28, 18);
+		cout << "Exit";
+
+
+		ch = _getch();
+		switch (ch)
+		{
+		case 72:	//Up
+			select--;
+			if (select == 0)
+				select = 5;
+			break;
+		case 80:	//Down
+			select++;
+			if (select == 6)
+				select = 1;
+			break;
+		case 13:	//Enter
+			if (select == 1)
+			{
+				DFA_menu();
+			}
+			if (select == 2)
+			{
+				coming();
+			}
+			if (select == 3)
+				coming();
 			if (select == 4)
+				about();
+			if (select == 5)
 				//exit(0);
 				exit_menu();
 		}
