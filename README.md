@@ -1,4 +1,4 @@
-# DFA_Simulator
+# Automata_Machines_Simulator
 
 This is Midterm Project of Theory of languages and Machines course.
 This Programm will Simulate Differents Automate Machines:
