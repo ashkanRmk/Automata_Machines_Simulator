@@ -1,6 +1,6 @@
 # Automata_Machines_Simulator
 
-## This is Finalterm Project of Theory of languages and Machines course.
+## This is Finalterm Project of *Theory of languages and Machines* course.
 ###### This Programm will Simulate Differents Automate Machines:
 1. DFA
 2. DPDA
