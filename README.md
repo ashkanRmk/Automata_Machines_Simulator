@@ -6,5 +6,5 @@
 2. DPDA
 3. Turring Machine
 
-######You can Import Machine Info with a **Text file**to the porgramm as *"*.txt"* also input them manually...
+######You can Import Machine Info with a **Text file**to the porgramm as *"  .txt"* also input them manually...
 
