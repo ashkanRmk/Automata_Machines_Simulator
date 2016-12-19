@@ -649,7 +649,6 @@ void Check_String_DPDA()
 					lng++;
 				}
 			}
-
 		}
 		if (lng == input.size())
 		{
@@ -665,7 +664,8 @@ void Check_String_DPDA()
 		cout << "* States Status *\n\n";
 		flag = true;
 		bool m = false;
-		for (int i = 0; i < input.length() + 1 && goal; i++)
+		bool r = true;
+		for (int i = 0; i < input.length() + 1 && goal && r; i++)
 		{
 			Sleep(1000);
 			gotoxy(count, 6);
@@ -712,8 +712,13 @@ void Check_String_DPDA()
 								flag = false;	//Jump to next char in String
 								m = false;
 								x = true;	//be in possible transtion of state
+								r = true;
 								break;
 							}
+						}
+						else
+						{
+							r = false;
 						}
 					}
 				}
@@ -724,7 +729,7 @@ void Check_String_DPDA()
 
 		for (int i = 0; i < acc_state_num; i++)
 		{
-			if (final_accept_state[i] == START && goal && stack.is_Empty() && x)
+			if (final_accept_state[i] == START && goal && stack.is_Empty() && x &&r)
 			{
 				color(3);
 				gotoxy(40, 9);
