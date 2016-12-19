@@ -5,6 +5,7 @@
 #include <fstream>
 #include <windows.h>
 #include <conio.h>
+#include <vector>
 using namespace std;
 
 void gotoxy(int x, int y)
@@ -44,6 +45,7 @@ struct node_DPDA
 	int transit_num;
 };
 
+//Customized stack for DPDA
 class Stack
 {
 private:
@@ -692,7 +694,7 @@ void Check_String_DPDA()
 						if (input[i] == state_dpa[j].pos_trans[k] || m)
 						{
 							char tmp = state_dpa[j].pop_stack[k];
-							char tmp1;
+							char tmp1 ;
 							stack.Show_top(tmp1);
 							if (tmp == tmp1)
 							{
@@ -729,7 +731,7 @@ void Check_String_DPDA()
 
 		for (int i = 0; i < acc_state_num; i++)
 		{
-			if (final_accept_state[i] == START && goal && stack.is_Empty() && x &&r)
+			if (final_accept_state[i] == START && goal && stack.is_Empty() && x &&r)	
 			{
 				color(3);
 				gotoxy(40, 9);
