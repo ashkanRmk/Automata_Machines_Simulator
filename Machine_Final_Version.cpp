@@ -476,8 +476,13 @@ void Init_DPDA_Manual()
 				cin >> state_dpa[i].transition[index];
 				output << state_dpa[i].transition[index] << endl;
 
-				cout << "\n\tWhat to POP from Stack? ";
+				cout << "\n\tWhat to POP from Stack? (Just one element!) ";
 				cin >> state_dpa[i].pop_stack[index];
+				while (state_dpa[i].pop_stack[index] == 'L')
+				{
+					cout << "\n\tDo NOT Enter LAMBDA (L)!\n\tAgain: ";
+					cin >> state_dpa[i].pop_stack[index];
+				}
 				output << state_dpa[i].pop_stack[index] << endl;
 
 				cout << "\n\tWhat to PUSH in Stack? ";
@@ -667,6 +672,7 @@ void Check_String_DPDA()
 		flag = true;
 		bool m = false;
 		bool r = true;
+		bool l_sib = false;
 		for (int i = 0; i < input.length() + 1 && goal && r; i++)
 		{
 			Sleep(1000);
@@ -681,20 +687,24 @@ void Check_String_DPDA()
 			{
 				for (int q = 0; q < state_dpa[j].transit_num; q++)
 				{
-						if (state_dpa[j].pos_trans[q] == 'L' &&  input[i] == NULL)
-						{
-							m = true;	//has LAMBDA transition and string finished
-						}
+					if (state_dpa[j].pos_trans[q] == 'L' &&  input[i] == NULL)
+					{
+						m = true;	//has LAMBDA transition and string finished
+					}
+					else if (state_dpa[j].pos_trans[q] == 'L' && input[i+1] != NULL)
+					{
+						l_sib = true;	//has LAMBDA transition and string NOT finished!
+					}
 				}
 				flag = true;
 				if (state_dpa[j].num_state == START)
 				{
 					for (int k = 0; k < state_dpa[j].transit_num && flag; k++)
 					{
-						if (input[i] == state_dpa[j].pos_trans[k] || m)
+						if (input[i] == state_dpa[j].pos_trans[k] || m || l_sib)
 						{
 							char tmp = state_dpa[j].pop_stack[k];
-							char tmp1 ;
+							char tmp1;
 							stack.Show_top(tmp1);
 							if (tmp == tmp1)
 							{
@@ -720,7 +730,7 @@ void Check_String_DPDA()
 						}
 						else
 						{
-							r = false;
+							r = false;	//stop checking string and reject!
 						}
 					}
 				}
@@ -731,7 +741,7 @@ void Check_String_DPDA()
 
 		for (int i = 0; i < acc_state_num; i++)
 		{
-			if (final_accept_state[i] == START && goal && stack.is_Empty() && x &&r)	
+			if (final_accept_state[i] == START && goal && stack.is_Empty() && x && r)
 			{
 				color(3);
 				gotoxy(40, 9);
