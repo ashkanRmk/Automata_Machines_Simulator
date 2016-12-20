@@ -5,7 +5,6 @@
 #include <fstream>
 #include <windows.h>
 #include <conio.h>
-#include <vector>
 using namespace std;
 
 void gotoxy(int x, int y)
